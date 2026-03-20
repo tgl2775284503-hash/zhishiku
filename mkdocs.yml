@@ -6,7 +6,19 @@ theme:
   name: material
   language: zh
   palette:
-    scheme: slate
+    - scheme: default
+      primary: white
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: 切换到深色模式
+
+    - scheme: slate
+      primary: black
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: 切换到浅色模式
 nav:
   - 首页: index.md
   - 视频配套文档:
