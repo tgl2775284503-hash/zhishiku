@@ -6,3 +6,4 @@
 - GitHub
 - OpenClaw
 - 工具
+- commit
