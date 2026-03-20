@@ -5,8 +5,8 @@ site_url: https://你的用户名.github.io/你的仓库名/
 theme:
   name: material
   language: zh
-  palette:
-    scheme: default
+    palette:
+    scheme: slate
 nav:
   - 首页: index.md
   - 视频配套文档:
