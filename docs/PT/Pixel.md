@@ -1,16 +1,3 @@
----
-layout: default
-title: 🎁Gemini教程｜Pixel活动免费领取 Google AI Pro 12个月｜无需 Pixel 设备  
-category: tutorial
----
-
-
-# **🎁Gemini教程｜Pixel活动免费领取 Google AI Pro 12个月｜无需 Pixel 设备**
-
-日期：2026.03.17 · 分类：教程
-
----
-
 ## 📺 **视频教程**
 
 YouTube 视频教程（完整版）：[点击观看]()
