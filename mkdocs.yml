@@ -8,9 +8,9 @@ theme:
 
 nav:
   - 首页: index.md
-  - GitHub:
+  - 视频配套文档:
       - GitHub Pages 入门: github/pages.md
-  - OpenClaw:
+  - 个人推荐:
       - 安装教程: openclaw/install.md
-  - 工具:
+  - 常用工具（自取）:
       - 常用工具: tools/common.md
