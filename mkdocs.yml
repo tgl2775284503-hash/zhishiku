@@ -1,0 +1,16 @@
+site_name: 我的知识库
+site_description: 教程与工具知识库
+site_url: https://你的用户名.github.io/你的仓库名/
+
+theme:
+  name: material
+  language: zh
+
+nav:
+  - 首页: index.md
+  - GitHub:
+      - GitHub Pages 入门: github/pages.md
+  - OpenClaw:
+      - 安装教程: openclaw/install.md
+  - 工具:
+      - 常用工具: tools/common.md
