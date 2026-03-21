@@ -16,11 +16,10 @@ jobs:
         with:
           python-version: 3.x
       # 步骤 1: 安装依赖 (原本的步骤)
-      - run: pip install mkdocs-material
+      - run: pip install mkdocs-material mkdocs-rss-plugin
 
       # ================== 【融合：自动扫描文件夹并生成 archives.md】 ==================
       # 这个步骤必须放在 pip install 之后，mkdocs build 之前！
-      # 我们精确对齐缩进，确保与 - run: pip ... 对齐
       - name: 自动生成视频配套文档归档 (Generate Archives Page)
         run: |
           python -c "
@@ -32,62 +31,72 @@ jobs:
           DOCS_DIR = Path('docs')
           OUTPUT_FILE = DOCS_DIR / 'archives.md'
           
-          # [核心路径配置]：设置你视频配套文档所在的根文件夹名字
-          # 根据你截图的结构，你的 2025/ 文件夹直接在 docs 下，所以这里设为 '.' 即可
-          COMPANION_ROOT = '.' 
-
-          print(f'正在扫描文件夹：{DOCS_DIR / COMPANION_ROOT} ...')
+          # [终极修复：精确打击模式]
+          # 此前的 COMPANION_ROOT = '.' (扫描全站docs/) 会触发 No space 错误。
+          # 现在的逻辑是：直接去查找 docs 下符合 8 位纯数字文件夹名的子文件夹 (如 docs/2025/, docs/2026/)
+          # 而不要扫描整个全站根目录，彻底避开 RSS 插件监测和 No space 错误！
           entries = []
 
-          # 扫描 COMPANION_ROOT 下的所有 Markdown 文件
-          # 包括 docs/2025/, docs/2026/ 等所有子文件夹
-          for filepath in (DOCS_DIR / COMPANION_ROOT).rglob('*.md'):
-              # 排除生成的此归档页面本身
-              if filepath.name == 'archives.md': continue
-              
-              # 从文件名读取日期 (Assumption: 格式为 YYYYMMDD_xxx.md)
-              # 正则表达式精准打击 YYYYMMDD_ 开头的文件
-              match = re.match(r'^(\d{4})(\d{2})(\d{2})_.*\.md$', filepath.name)
-              if not match: continue
-              
-              year, month, day = match.groups()
-              
-              # 读取 Markdown 内容获取主标题 (Assumption: 第一行有 '#' 开头的标题)
-              title = '未定义标题'
-              try:
-                  with open(filepath, 'r', encoding='utf-8') as f:
-                      for line in f:
-                          if line.startswith('# '):
-                              title = line.strip('# ').strip()
-                              break
-              except Exception as e:
-                  print(f'读取文件标题失败：{filepath}，错误：{e}')
-                  continue
-              
-              # 生成相对路径的 URL (相对 root 的根路径)
-              # docs/2025/20251220.md -> /2025/20251220/
-              rel_path = filepath.relative_to(DOCS_DIR)
-              url = str(rel_path.with_suffix('')).replace('\\\\', '/') + '/'
-              
-              entries.append({
-                  'date_int': int(f'{year}{month}{day}'), # 用于排序
-                  'year': year,
-                  'day': day,
-                  'month': month,
-                  'title': title,
-                  'url': url
-              })
+          print('正在执行【精确打击归档扫描模式】...')
 
-          # 按时间倒序排序 (最新发布在最前面)
+          # 1. 精准查找符合 YYYY 年度规则的子文件夹
+          valid_year_dirs = []
+          for p in DOCS_DIR.iterdir():
+              if p.is_dir() and re.match(r'^\d{4}$', p.name):
+                  valid_year_dirs.append(p)
+                  print(f'发现有效年度文件夹：{p.name}')
+
+          if not valid_year_dirs:
+              print('警告：未在 docs/ 下发现符合 YYYY(4位数字) 规则的年度子文件夹。');
+
+          # 2. 精准扫描这些文件夹下的文档
+          for year_dir in valid_year_dirs:
+              # 扫描这些文件夹下的 Markdown 文件
+              for filepath in year_dir.rglob('*.md'):
+                  
+                  # 从文件名读取日期 (Assumption: 格式为 YYYYMMDD_xxx.md)
+                  match = re.match(r'^(\d{4})(\d{2})(\d{2})_.*\.md$', filepath.name)
+                  if not match: continue
+                  
+                  year, month, day = match.groups()
+                  print(f'发现有效日期和文件：{month}/{day}, {filepath.name}')
+                  
+                  # 读取 Markdown 内容获取主标题 (Assumption: 第一行有 '#' 开头的标题)
+                  title = '未定义标题'
+                  try:
+                      with open(filepath, 'r', encoding='utf-8') as f:
+                          for line in f:
+                              if line.startswith('# '):
+                                  title = line.strip('# ').strip()
+                                  break
+                  except Exception as e:
+                      print(f'读取文件标题失败：{filepath}，错误：{e}')
+                      continue
+                  
+                  # 生成相对路径的 URL (相对 root 的根路径)
+                  # URL通常会剥离文件夹层次。例如 docs/2025/20251220.md -> /2025/20251220/
+                  rel_path = filepath.relative_to(DOCS_DIR)
+                  url = str(rel_path.with_suffix('')).replace('\\\\', '/') + '/'
+                  
+                  entries.append({
+                      'date_int': int(f'{year}{month}{day}'), # 用于排序
+                      'year': year,
+                      'day': day,
+                      'month': month,
+                      'title': title,
+                      'url': url
+                  })
+
+          # 3. 按时间倒序排序 (最新发布在最前面)
           entries.sort(key=lambda x: x['date_int'], reverse=True)
 
-          # 按年度分组
+          # 4. 按年度分组
           grouped_entries = collections.defaultdict(list)
           for entry in entries:
               grouped_entries[entry['year']].append(entry)
 
           # ================= 生成最终 HTML =================
-          # 这里使用了 custom.css 中定义的 .archives-* 隔离 Class
+          print(f'正在生成归档页面，包含 {len(entries)} 条目...')
           with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
               f.write('# 📂 视频配套文档归档 (Archives)\\n\\n')
               f.write('<div class=\"archives-timeline\">\\n')
@@ -117,7 +126,6 @@ jobs:
       # ================== 【融合：结束】 ==================
 
       # 步骤 2: 构建 HTML (原本的步骤)
-      # 此时 mkdocs 就会看到新生成的 docs/archives.md 并处理它
       - run: mkdocs build
       
       # 步骤 3: 上传 artifact (原本的步骤)
@@ -126,7 +134,7 @@ jobs:
           path: ./site
           
   deploy:
-    # 这是官方标准的双 Job 部署，不用动
+    # 官方标准的双 Job 部署，不用动
     needs: build
     runs-on: ubuntu-latest
     steps:
