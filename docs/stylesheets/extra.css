@@ -1,16 +1,12 @@
-/* 1. 扩大整个网页的最大宽度，为两边腾出场地 */
+/* 1. 扩大整个页面的最大宽度 */
 .md-grid {
   max-width: 1600px !important;
 }
 
-/* 2. 优雅地加宽左侧导航栏（仅电脑端） */
+/* 2. 强制加宽左侧导航栏（仅桌面端生效，保护手机端体验） */
 @media screen and (min-width: 76.25em) {
   .md-sidebar--primary {
-    /* 18rem 到 20rem 是比较合适的阅读比例。22rem 可能会让左边显得过于笨重，你可以自己微调这个数值 */
-    width: 20rem !important; 
+    width: 22rem !important;
+    flex: 0 0 22rem !important; /* 关键加这一句：强制弹性盒子分配 22rem 的固定空间，不可压缩 */
   }
-  
-  /* * 注：只要 container 加宽了，你的长标题自然就有足够空间在一行展示了。
-   * 不需要额外去写 white-space，主题默认的空间足够时就不会换行。
-   */
 }
