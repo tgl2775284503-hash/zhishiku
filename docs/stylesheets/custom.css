@@ -1,0 +1,142 @@
+/* ========================================================================
+   1. 全局样式 (保留你之前的“极简恢复版”)
+   ======================================================================= */
+
+/* 1.1 稍微增加整体页面最大宽度，让阅读更宽敞 */
+.md-grid {
+    max-width: 1400px;
+}
+
+/* 1.2 稍微加宽左侧边栏，使其看起来更协调 (仅电脑端生效) */
+@media screen and (min-width: 76.25em) {
+    .md-sidebar--primary {
+        width: 16rem; /* 适度加宽到 16rem */
+    }
+}
+
+
+/* ========================================================================
+   2. 归档页面专用样式 (专业、简约、带年度节点的时间树)
+   ======================================================================= */
+
+/* 2.1 整体容器：居中对齐 */
+.archives-timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* 2.2 核心：绘制贯穿整个页面的左侧垂直时间线 */
+.archives-timeline::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    background-color: #f1f1f1; /* 简约的灰色时间线 */
+    top: 0;
+    bottom: 0;
+    left: 110px; /* 设定时间线从左侧缩进的距离，腾出日期空间 */
+    margin-left: -1px;
+    z-index: 0;
+}
+
+/* ========================================================================
+   2.3 年度大节点样式 (每个年度都有时间节点树)
+   ======================================================================= */
+.archives-year-node {
+    position: relative;
+    margin: 3rem 0 1rem 0;
+    color: #444;
+    font-size: 1.6rem;
+    font-weight: 800;
+    padding-left: 140px; /* 保证年度标题移到线右侧 */
+    line-height: 1.2;
+}
+
+/* 年度节点的那个蓝色锚点 */
+.archives-year-node::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 4px solid #1976d2; /* 经典 Material 蓝色边框 */
+    top: 0;
+    left: 110px; /* 完美对齐垂直时间线 */
+    margin-left: -10px;
+    z-index: 1;
+}
+
+/* ========================================================================
+   2.4 具体文档条目样式 (简约紧凑列表版)
+   ======================================================================= */
+.archives-item {
+    position: relative;
+    margin-bottom: 1rem; /* 极致缩减单条项目之间的垂直间距 */
+    width: 100%;
+    display: flex;
+    align-items: center; /* 确保日期、圆点、标题在同一水平线上 */
+}
+
+/* 左侧的日期 */
+.archives-meta {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100px; /* 日期区域宽度 */
+    text-align: right;
+    font-size: 0.85rem; /* 减小字号到普通文字大小 */
+    color: #999;
+    font-weight: 500;
+}
+
+/* 时间线上的普通“圆点”锚点 */
+.archives-item::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #f1f1f1;
+    border: 2px solid #ddd;
+    top: 0.35rem; /* 对齐标题基线 */
+    left: 110px; /* 对齐垂直时间线 */
+    margin-left: -6px;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+/* 悬停效果：圆点 */
+.archives-item:hover::after {
+    border-color: #42a5f5; /* 悬停变为蓝色 */
+    background-color: #e3f2fd; /* 蓝色淡化背景 */
+}
+
+/* 右侧的内容（标题和链接） */
+.archives-content {
+    position: relative;
+    left: 130px; /* 移到线和日期的右侧 */
+    width: calc(100% - 140px);
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* 精准打击标题标签，减小字号到普通文本级别 */
+.archives-item h3 {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 0.95rem !important; /* 【关键】：将标题字号减小到普通文字大小 */
+    font-weight: 600;
+    line-height: 1.4 !important;
+}
+
+/* 链接样式：经典蓝色 + 移除下划线 */
+.archives-item h3 a {
+    color: #1976d2 !important;
+    text-decoration: none !important;
+    transition: color 0.2s;
+}
+.archives-item h3 a:hover {
+    color: #0d47a1 !important;
+}
