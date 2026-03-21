@@ -19,6 +19,8 @@ theme:
       toggle:
         icon: material/weather-sunny
         name: 切换到浅色模式
+extra_css:
+  - stylesheets/extra.css        
 nav:
   - 首页: index.md
   - 视频配套文档:
