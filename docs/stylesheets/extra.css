@@ -9,7 +9,7 @@
 @media screen and (min-width: 76.25em) {
   /* 左侧边栏加宽 */
   .md-sidebar--primary {
-    flex: 0 0 22rem !important; /* 补回防挤压核心代码 */
+    flex: 0 0 22rem !important;
     width: 22rem !important;
   }
 
@@ -81,7 +81,7 @@
   background: linear-gradient(120deg, #1976d2, #42a5f5, #00d2ff);
   background-size: 200% 200%;
   -webkit-background-clip: text;
-  background-clip: text; /* 🌟 加上这行，底部的黄色警告瞬间消失！ */
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradientShift 5s ease infinite;
 }
