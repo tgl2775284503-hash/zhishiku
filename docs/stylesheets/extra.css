@@ -1,12 +1,11 @@
-/* 1. 扩大整个页面的最大宽度 */
+/* 1. 扩大整体网页最大宽度，为侧边栏腾出空间 */
 .md-grid {
   max-width: 1600px !important;
 }
 
-/* 2. 强制加宽左侧导航栏（仅桌面端生效，保护手机端体验） */
+/* 2. 增加左侧边栏的宽度（仅在电脑桌面端生效，防止破坏手机端抽屉菜单） */
 @media screen and (min-width: 76.25em) {
   .md-sidebar--primary {
-    width: 22rem !important;
-    flex: 0 0 22rem !important; /* 关键加这一句：强制弹性盒子分配 22rem 的固定空间，不可压缩 */
+    width: 20rem !important; 
   }
 }
