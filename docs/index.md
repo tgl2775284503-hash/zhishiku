@@ -1,5 +1,5 @@
 <div class="hero-container">
-  <img src="images/my-avatar.jpg" alt="Avatar" class="hero-avatar">
+  <img src="images\my-avatar.jpg" alt="Avatar" class="hero-avatar">
 
   <h1 class="hero-title">欢迎来到我的数字宇宙</h1>
 
