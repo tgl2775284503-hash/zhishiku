@@ -1,40 +1,50 @@
 /* ========================================================== */
-/* 1. 导航栏加宽 & 正文排版 (修复语法错误)               */
+/* 1. 导航栏加宽 & 正文完美避让排版                        */
 /* ========================================================== */
 
-/* 整体页面最大宽度，撑开页面空间 */
 .md-grid {
   max-width: 1600px !important;
 }
 
-/* 电脑大屏幕下的加宽逻辑 */
 @media screen and (min-width: 76.25em) {
-  /* 设置左侧侧边栏宽度 */
+  /* 左侧边栏加宽 */
   .md-sidebar--primary {
-    flex: 0 0 22rem !important;
+    flex: 0 0 22rem !important; /* 补回防挤压核心代码 */
     width: 22rem !important;
   }
 
-  /* 让右侧的正文内容向右避让 22rem */
+  /* 补回正文避让核心代码，防止被挤扁 */
   .md-content {
     margin-left: 22rem !important;
   }
+
+  /* 导航内部填充 */
+  .md-sidebar--primary .md-nav,
+  .md-sidebar--primary .md-sidebar__scrollwrap,
+  .md-sidebar--primary .md-sidebar__inner {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+.md-nav__title,
+.md-nav__item {
+  white-space: normal !important;
 }
 
 /* ========================================================== */
-/* 2. UP 主专属炫酷主页样式 (头像核心定义)                */
+/* 2. UP 主专属炫酷主页样式                               */
 /* ========================================================== */
 
 .hero-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* 🌟 核心：让所有内容（头像、文字）居中 */
+  align-items: center;
   justify-content: center;
   padding: 6rem 1rem;
-  text-align: center; /* 让文字居中 */
+  text-align: center;
 }
 
-/* 主页文字逐个淡入动效 */
 .hero-container > * {
   opacity: 0;
   animation: staggeredFadeIn 0.8s ease-out forwards;
@@ -45,33 +55,25 @@
 .hero-container .hero-subtitle { animation-delay: 0.5s; }
 .hero-container .hero-buttons { animation-delay: 0.7s; }
 
-/* 🌟 头像核心样式：变小、变圆、蓝色呼吸发光、浮动动效 */
+/* 🌟 头像核心样式：小巧、圆形、发光、浮动 */
 .hero-avatar {
-  width: 150px; /* 🌟 调小：设置头像宽度 */
-  height: 150px; /* 🌟 调小：设置头像高度 (确保宽高一致) */
-  
-  border-radius: 50%; /* 圆形 */
-  object-fit: cover; /* 确保图片不变形 */
-  
+  width: 150px; 
+  height: 150px; 
+  border-radius: 50%; 
   margin-bottom: 2rem;
+  object-fit: cover; 
   border: 4px solid rgba(255, 255, 255, 0.8);
-  
-  /* 炫酷动效：蓝色霓虹呼吸发光 */
-  box-shadow: 0 0 25px rgba(66, 165, 245, 0.3); /* 初始蓝色发光 */
-  
-  /* 炫酷动效：上下浮动动画 */
-  animation: float 4s ease-in-out infinite, pulseGlow 3s ease-in-out infinite; /* 浮动+发光动画 */
-  
+  box-shadow: 0 0 25px rgba(66, 165, 245, 0.3); 
+  animation: float 4s ease-in-out infinite, pulseGlow 3s ease-in-out infinite; 
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* 鼠标悬停时的动效：上浮、旋转、放大 */
 .hero-avatar:hover {
   transform: translateY(-8px) rotate(8deg) scale(1.08);
-  box-shadow: 0 0 45px rgba(66, 165, 245, 0.6); /* 发光变强 */
+  box-shadow: 0 0 45px rgba(66, 165, 245, 0.6); 
 }
 
-/* 主页标题样式：蓝色渐变 Shift (Shift) */
+/* 主页标题 */
 .hero-title {
   font-size: 2.8rem;
   font-weight: 800;
@@ -79,11 +81,11 @@
   background: linear-gradient(120deg, #1976d2, #42a5f5, #00d2ff);
   background-size: 200% 200%;
   -webkit-background-clip: text;
+  background-clip: text; /* 🌟 加上这行，底部的黄色警告瞬间消失！ */
   -webkit-text-fill-color: transparent;
   animation: gradientShift 5s ease infinite;
 }
 
-/* 主页副标题样式 */
 .hero-subtitle {
   font-size: 1.15rem;
   color: #666;
@@ -92,12 +94,10 @@
   line-height: 1.8;
 }
 
-/* 深色模式下的副标题颜色 */
 [data-md-color-scheme="slate"] .hero-subtitle {
   color: #a7b1b5;
 }
 
-/* 按钮容器 */
 .hero-buttons {
   display: flex;
   gap: 1.5rem;
@@ -105,7 +105,6 @@
   justify-content: center;
 }
 
-/* 按钮基础样式 */
 .hero-btn {
   padding: 0.9rem 2.2rem;
   border-radius: 30px;
@@ -118,21 +117,18 @@
   gap: 10px;
 }
 
-/* 主要按钮：YouTube 红色风格 */
 .hero-btn-primary {
   background-color: #ff0000;
   color: white !important;
   box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
 }
 
-/* 次要按钮：幽灵按钮风格 */
 .hero-btn-secondary {
   background-color: transparent;
   color: #1976d2 !important;
   border: 2px solid #1976d2;
 }
 
-/* 深色模式下的次要按钮风格 */
 [data-md-color-scheme="slate"] .hero-btn-secondary {
   background-color: rgba(255, 255, 255, 0.05);
   color: white !important;
@@ -140,29 +136,25 @@
 }
 
 /* ========================================================== */
-/* 3. 主页动画定义 (Animations)                      */
+/* 3. 动画定义库                                         */
 /* ========================================================== */
 
-/* 逐个淡入动画 */
 @keyframes staggeredFadeIn {
   from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* 蓝色发光呼吸动画 */
 @keyframes pulseGlow {
   0%, 100% { box-shadow: 0 0 25px rgba(66, 165, 245, 0.3); }
   50% { box-shadow: 0 0 45px rgba(66, 165, 245, 0.6); }
 }
 
-/* 上下浮动动画 */
 @keyframes float {
   0% { transform: translateY(0px); }
   50% { transform: translateY(-12px); }
   100% { transform: translateY(0px); }
 }
 
-/* 文字渐变SHIFT动画 */
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }

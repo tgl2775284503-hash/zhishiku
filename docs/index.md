@@ -1,5 +1,5 @@
 <div class="hero-container">
-  <img src="images/avatar.jpg" alt="Avatar" class="hero-avatar">
+  <img src="images/my-avatar.jpg" alt="Avatar" class="hero-avatar">
 
   <h1 class="hero-title">欢迎来到我的数字宇宙</h1>
 
@@ -10,7 +10,7 @@
   </p>
 
   <div class="hero-buttons">
-    <a href="https://www.youtube.com/@%E7%A7%91%E6%8A%80%E5%B0%8FV" target="_blank" class="hero-btn hero-btn-primary">
+    <a href="https://youtube.com/你的频道地址" target="_blank" class="hero-btn hero-btn-primary">
       <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M21.582,6.186c-0.23-0.86-0.908-1.538-1.768-1.768C18.254,4,12,4,12,4s-6.254,0-7.814,0.418c-0.86,0.23-1.538,0.908-1.768,1.768C2,7.746,2,12,2,12s0,4.254,0.418,5.814c0.23,0.86,0.908,1.538,1.768,1.768C5.746,20,12,20,12,20s6.254,0,7.814-0.418c0.86-0.23,1.538-0.908,1.768-1.768C22,16.254,22,12,22,12S22,7.746,21.582,6.186z M9.996,15.005l0-6.01l5.224,3L9.996,15.005z"/></svg>
       观看最新视频
     </a>
