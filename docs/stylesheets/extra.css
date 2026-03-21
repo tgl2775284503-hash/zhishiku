@@ -1,25 +1,25 @@
-/* 1. 扩大整个网页容器的最大宽度 */
+/* 1. 扩大整个网页的最大宽度，为两边腾出场地 */
 .md-grid {
   max-width: 1600px !important; 
 }
 
-/* 2. 自定义左侧导航栏宽度及消除内部空隙 */
+/* 2. 优雅地加宽左侧导航栏（仅电脑端） */
 @media screen and (min-width: 76.25em) {
-  /* 放大左侧边栏整体框架 */
   .md-sidebar--primary {
-    width: 22rem !important; /* 你可以根据需要修改 22 这个数字，数值越大越宽 */
+    /* 核心修复：告诉系统这个侧边栏天生就要占 22rem 的位置，剩余空间再分给正文 */
+    flex: 0 0 22rem !important; 
+    width: 22rem !important;
   }
   
-  /* 🌟 核心修复：强行让内部的导航菜单撑满新的框架，不许提前换行 */
-  .md-sidebar--primary .md-nav,
-  .md-sidebar--primary .md-sidebar__scrollwrap,
-  .md-sidebar--primary .md-sidebar__inner {
+  /* 确保内部的滚动区域跟着一起变宽 */
+  .md-sidebar__scrollwrap {
     width: 100% !important;
     max-width: 100% !important;
   }
   
-  /* 同步把右侧文章主内容区往右推，防止重叠 */
-  .md-content {
-    margin-left: 22rem !important; /* ⚠️ 这里的数字必须和上面 sidebar 的 width 保持一致！ */
+  /* 让导航栏的文字有更大的空间展示，不再那么早换行 */
+  .md-nav__title,
+  .md-nav__item {
+    white-space: normal !important;
   }
 }
