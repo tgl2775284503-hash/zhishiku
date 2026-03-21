@@ -1,17 +1,25 @@
-/* 1. 扩大整个网页容器的最大宽度。这样左右两边的留白会减少，导航栏自然就会向左移动 */
+/* 1. 扩大整个网页容器的最大宽度 */
 .md-grid {
-  max-width: 1600px; /* 默认通常是 1220px，你可以根据显示器大小自己调整这个数字，或者改成 90% */
+  max-width: 1600px !important; 
 }
 
-/* 2. 增加左侧导航栏的宽度（只在电脑等大屏幕下生效，不影响手机端） */
+/* 2. 自定义左侧导航栏宽度及消除内部空隙 */
 @media screen and (min-width: 76.25em) {
-  /* 把主导航栏加宽 */
+  /* 放大左侧边栏整体框架 */
   .md-sidebar--primary {
-    width: 18rem; /* 默认大约是 12.1rem，这里调大到 18rem，如果还觉得窄可以继续往上加 */
+    width: 22rem !important; /* 你可以根据需要修改 22 这个数字，数值越大越宽 */
   }
   
-  /* 导航栏变宽了，必须把右边的文章主内容区域往右推，腾出空间，否则文字会重叠 */
+  /* 🌟 核心修复：强行让内部的导航菜单撑满新的框架，不许提前换行 */
+  .md-sidebar--primary .md-nav,
+  .md-sidebar--primary .md-sidebar__scrollwrap,
+  .md-sidebar--primary .md-sidebar__inner {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  /* 同步把右侧文章主内容区往右推，防止重叠 */
   .md-content {
-    margin-left: 18rem; /* 这个数字必须和上面的 width 保持一致 */
+    margin-left: 22rem !important; /* ⚠️ 这里的数字必须和上面 sidebar 的 width 保持一致！ */
   }
 }
